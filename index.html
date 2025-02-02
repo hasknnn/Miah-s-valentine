@@ -107,33 +107,22 @@
         .message {
             flex: 1;
             overflow-y: auto;
-            font-size: 1.29rem;
+            font-size: 1.29rem; /* Default font size */
             line-height: 1.6;
             padding: 2%;
             margin-top: 16%;
+            transition: font-size 0.3s ease; /* Smooth transition for font size changes */
         }
 
-        @media (max-width: 768px) {
-            .message {
-                font-size: 1rem;
-                margin-top: 15%;
-            }
-            .sticker.envelope img {
-                width: 300px !important;
-            }
-            .sticker.butterfly img {
-                width: 300px !important;
-            }
-            .click-text {
-                font-size: 1.8rem !important;
-                bottom: 15% !important;
-            }
-            .miah-name {
-                font-size: 6rem;
-            }
-            .heart-symbol {
-                font-size: 5rem;
-            }
+        .size-control {
+            position: absolute;
+            bottom: 20px; /* Adjusted to the bottom */
+            right: 20px; /* Adjusted to the right */
+            z-index: 10;
+        }
+
+        .size-control input[type="range"] {
+            width: 100px; /* Smaller width for compact placement */
         }
 
         .question-container {
@@ -183,6 +172,29 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
+        @media (max-width: 768px) {
+            .message {
+                font-size: 1rem;
+                margin-top: 15%;
+            }
+            .sticker.envelope img {
+                width: 300px !important;
+            }
+            .sticker.butterfly img {
+                width: 300px !important;
+            }
+            .click-text {
+                font-size: 1.8rem !important;
+                bottom: 15% !important;
+            }
+            .miah-name {
+                font-size: 6rem;
+            }
+            .heart-symbol {
+                font-size: 5rem;
+            }
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
@@ -209,7 +221,7 @@
 
         <!-- Inside Page -->
         <div class="inside" id="insidePage">
-            <div class="message">
+            <div class="message" id="message">
                 <p>Hey princess,</p>
                 <p>Since the day I met you, I’ve never been happier. You light up my whole life, and I feel like the luckiest man alive to call you mine. Even though we’re miles apart, every moment we’ve shared, every call, every text, every memory has only made me more certain you’re the one I want to spend my forever with</p>
                 <p>You’re my best friend, my confidant, and my greatest love. Words could never express how much you mean to me, but I hope you know you’re my everything, Miah. You’re my life, my heart, and my future 🤍</p>
@@ -226,6 +238,11 @@
             </div>
             <div class="sticker teddy-bear" style="position: absolute; top: 5px; right: 25px; transform: rotate(0deg);">
                 <img src="https://i.imgur.com/EPx85s3.png" alt="Cute Teddy Bear" style="width: 260px; height: auto;">
+            </div>
+
+            <!-- Font Size Control -->
+            <div class="size-control">
+                <input type="range" id="fontSize" min="0.8" max="2.5" step="0.1" value="1.29">
             </div>
         </div>
     </div>
@@ -328,6 +345,14 @@
                 console.error('Error sending email:', error);
             });
         }
+
+        // Add font size control functionality
+        const fontSizeSlider = document.getElementById('fontSize');
+        const messageElement = document.getElementById('message');
+
+        fontSizeSlider.addEventListener('input', function() {
+            messageElement.style.fontSize = `${this.value}rem`;
+        });
     </script>
 </body>
 </html>
