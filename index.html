@@ -281,7 +281,7 @@
 
             <!-- Font Size Control -->
             <div class="size-control">
-                <input type="range" id="fontSize" min="0.8" max="2.5" step="0.1" value="1.29">
+                <input type="range" id="fontSize" min="0.8" max="3.0" step="0.1" value="1.29">
             </div>
         </div>
     </div>
@@ -312,6 +312,26 @@
         const clickSound = document.getElementById('clickSound');
         const customModal = document.getElementById('customModal');
         const modalMessage = document.getElementById('modalMessage');
+
+        // Get the slider and message elements
+        const fontSizeSlider = document.getElementById('fontSize');
+        const messageElement = document.getElementById('message');
+
+        // Retrieve the saved slider value from localStorage
+        const savedFontSize = localStorage.getItem('fontSize');
+
+        // If a saved value exists, set the slider and font size
+        if (savedFontSize) {
+            fontSizeSlider.value = savedFontSize;
+            messageElement.style.fontSize = `${savedFontSize}rem`;
+        }
+
+        // Add event listener to save the slider value whenever it changes
+        fontSizeSlider.addEventListener('input', function() {
+            const fontSize = this.value;
+            messageElement.style.fontSize = `${fontSize}rem`;
+            localStorage.setItem('fontSize', fontSize); // Save to localStorage
+        });
 
         function revealCard() {
             wooshSound.play();
@@ -398,14 +418,6 @@
                 console.error('Error sending email:', error);
             });
         }
-
-        // Add font size control functionality
-        const fontSizeSlider = document.getElementById('fontSize');
-        const messageElement = document.getElementById('message');
-
-        fontSizeSlider.addEventListener('input', function() {
-            messageElement.style.fontSize = `${this.value}rem`;
-        });
     </script>
 </body>
 </html>
