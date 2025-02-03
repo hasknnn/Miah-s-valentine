@@ -23,6 +23,8 @@
             --lavender: #957dad;
             --redish: #ff6b6b;
             --dark-bg: #6d527d;
+            --dark-grey: #2c3e50;
+            --soft-grey: #34495e;
         }
 
         body {
@@ -176,6 +178,36 @@
             to { opacity: 1; }
         }
 
+        /* Custom Modal Styles */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .custom-modal-content {
+            background: #414141e6;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: bold;
+            color: #fff; /* White text for contrast */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .custom-modal-content p {
+            margin: 0;
+        }
+
         @media (max-width: 768px) {
             .message {
                 font-size: 1rem;
@@ -196,6 +228,10 @@
             }
             .heart-symbol {
                 font-size: 5rem;
+            }
+            .custom-modal-content {
+                font-size: 2.5rem;
+                padding: 20px;
             }
         }
     </style>
@@ -250,6 +286,13 @@
         </div>
     </div>
 
+    <!-- Custom Modal -->
+    <div class="custom-modal" id="customModal" onclick="closeModal()">
+        <div class="custom-modal-content">
+            <p id="modalMessage"></p>
+        </div>
+    </div>
+
     <audio id="wooshSound" src="sounds/woosh.mp3"></audio>
     <audio id="clickSound" src="sounds/click.mp3"></audio>
     <audio id="confettiSound" src="sounds/confetti.mp3"></audio>
@@ -267,6 +310,8 @@
         const noBtn = document.getElementById('noBtn');
         const wooshSound = document.getElementById('wooshSound');
         const clickSound = document.getElementById('clickSound');
+        const customModal = document.getElementById('customModal');
+        const modalMessage = document.getElementById('modalMessage');
 
         function revealCard() {
             wooshSound.play();
@@ -279,10 +324,11 @@
             confettiSound.play(); // Play confetti sound
             
             if (clickedNo) {
-                alert("that's what I thought, dummy");
+                modalMessage.textContent = "that's what I thought, dummy :)";
             } else {
-                alert("yay, I love you, dummy :)");
+                modalMessage.textContent = "yay, I love you, dummy <3";
             }
+            customModal.style.display = "flex";
             disableButtons();
 
             confetti({
@@ -315,6 +361,10 @@
                 noBtn.style.color = "#957dad";
                 noBtn.onclick = handleYes;
             }
+        }
+
+        function closeModal() {
+            customModal.style.display = "none";
         }
 
         function disableButtons() {
